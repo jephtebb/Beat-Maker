@@ -14,7 +14,30 @@ class Drumkit{
     repeat(){
         let step = this.index % 8;
         const activeBars = document.querySelectorAll(`.b${step}`)
-        console.log(activeBars);
+        activeBars.forEach(bar =>{
+            bar.style.animation = `playTrack 0.3s alternate ease-in-out 2`;
+            if(bar.classList.contains('active')){
+                if(bar.classList.contains('kick-pad')){
+                    this.kickAudio.currentTime = 0;
+                    this.kickAudio.play();
+                }
+
+            }
+            if(bar.classList.contains('active')){
+                if(bar.classList.contains('snare-pad')){
+                    this.snareAudio.currentTime = 0;
+                    this.snareAudio.play();
+                }
+
+            }
+             if(bar.classList.contains('active')){
+                if(bar.classList.contains('hihat-pad')){
+                    this.hihatAudio.currentTime = 0;
+                    this.hihatAudio.play();
+                }
+
+            }
+        })
         this.index++;
     }
     start(){
@@ -27,7 +50,11 @@ class Drumkit{
 const drumkit = new Drumkit();
 drumkit.pads.forEach(pad => {
     pad.addEventListener('click', drumkit.activePad);
-})
+    pad.addEventListener('animationend', function(){
+        this.style.animation = "";
+    });
+        
+});
 drumkit.playBtn.addEventListener('click', function() {
     drumkit.start();
 });
